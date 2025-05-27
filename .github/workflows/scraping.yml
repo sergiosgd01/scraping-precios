@@ -1,12 +1,12 @@
-name: Ejecutar scraping diario
+name: Scraping y visualización diaria
 
 on:
   schedule:
-    - cron: '0 9 * * *'  # Ejecuta todos los días a las 9:00 UTC
+    - cron: '0 9 * * *'  # Todos los días a las 9:00 UTC
   workflow_dispatch:
 
 jobs:
-  run-scraping:
+  scraping:
     runs-on: ubuntu-latest
 
     steps:
@@ -25,5 +25,48 @@ jobs:
       - name: Instalar navegadores Playwright
         run: npx playwright install
 
-      - name: Ejecutar script scraping
+      - name: Ejecutar scraping
         run: python scraping.py
+
+      - name: Configurar git para push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Añadir archivos actualizados y hacer commit
+        run: |
+          git add precios_evowhey.xlsx precios_evowhey.csv precios_creatina.xlsx precios_creatina.csv
+          git diff --cached --quiet || git commit -m "Actualizar precios con datos nuevos"
+
+      - name: Push cambios al repo
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: git push origin main
+
+  visualizacion:
+    needs: scraping
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas matplotlib seaborn
+
+      - name: Ejecutar visualización
+        run: python visualizacion.py
+
+      - name: Subir gráficos como artefactos
+        uses: actions/upload-artifact@v3
+        with:
+          name: graficos-precios
+          path: |
+            precios_evowhey.png
+            precios_creatina.png

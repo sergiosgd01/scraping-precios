@@ -12,9 +12,11 @@ def graficar_precios(nombre_archivo_csv):
     plt.xlabel('Fecha')
     plt.ylabel('Precio (€)')
     plt.grid(True)
-    plt.show()
+    
+    nombre_png = nombre_archivo_csv.replace('.csv', '.png')
+    plt.savefig(nombre_png)
+    plt.close()
 
 if __name__ == "__main__":
     graficar_precios('precios_evowhey.csv')
     graficar_precios('precios_creatina.csv')
-
