@@ -64,7 +64,7 @@ jobs:
         run: python visualizacion.py
 
       - name: Subir gráficos como artefactos
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: graficos-precios
           path: |
