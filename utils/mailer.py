@@ -9,7 +9,7 @@ def analizar_precio_historico(nombre_producto, precio_actual):
     """
     Analiza si el precio actual es el más alto o más bajo históricamente
     """
-    archivo_excel = f"precios_{nombre_producto}.xlsx"
+    archivo_excel = f"data/precios_{nombre_producto}.xlsx"
     
     if not os.path.exists(archivo_excel):
         return ""
@@ -54,10 +54,11 @@ def analizar_precio_historico(nombre_producto, precio_actual):
     except Exception as e:
         return ""
 
-def enviar_email(remitente, clave, destinatario, pre_crea, pre_prot, img_crea, img_prot):
+def enviar_email(remitente, clave, destinatario, pre_crea, pre_prot, pre_pack, img_crea, img_prot, img_pack):
     # Analizar precios históricos
     mensaje_creatina = analizar_precio_historico("creatina", pre_crea)
     mensaje_proteina = analizar_precio_historico("evowhey", pre_prot)
+    mensaje_proteina_pack = analizar_precio_historico("proteina_pack", pre_pack)
     
     asunto = "Precios diarios: Creatina y Proteína"
     
@@ -65,16 +66,22 @@ def enviar_email(remitente, clave, destinatario, pre_crea, pre_prot, img_crea, i
     texto_plano = f"""Buenos días,
 
 Precios de hoy ({datetime.date.today()}):
-• Creatina: {pre_crea}"""
+• Creatina (1Kg): {pre_crea}"""
     
     if mensaje_creatina:
         texto_plano += f" {mensaje_creatina}"
     
     texto_plano += f"""
-• Proteína: {pre_prot}"""
+• Proteína (2Kg): {pre_prot}"""
     
     if mensaje_proteina:
         texto_plano += f" {mensaje_proteina}"
+    
+    texto_plano += f"""
+• Proteína pack (5x500g): {pre_pack}"""
+    
+    if mensaje_proteina_pack:
+        texto_plano += f" {mensaje_proteina_pack}"
     
     texto_plano += """
 
@@ -89,16 +96,22 @@ Saludos."""
 
 <p><strong>Precios de hoy ({datetime.date.today()}):</strong></p>
 <ul>
-<li><strong>Creatina:</strong> {pre_crea}"""
+<li><strong>Creatina (1Kg):</strong> {pre_crea}"""
     
     if mensaje_creatina:
         html_content += f" <span style='color: #e74c3c; font-weight: bold;'>{mensaje_creatina}</span>"
     
     html_content += f"""</li>
-<li><strong>Proteína:</strong> {pre_prot}"""
+<li><strong>Proteína (2Kg):</strong> {pre_prot}"""
     
     if mensaje_proteina:
         html_content += f" <span style='color: #e74c3c; font-weight: bold;'>{mensaje_proteina}</span>"
+    
+    html_content += f"""</li>
+<li><strong>Proteína pack (5x500g):</strong> {pre_pack}"""
+    
+    if mensaje_proteina_pack:
+        html_content += f" <span style='color: #e74c3c; font-weight: bold;'>{mensaje_proteina_pack}</span>"
     
     html_content += """</li>
 </ul>
@@ -116,7 +129,7 @@ Saludos."""
     msg['From'] = remitente
     msg['To'] = destinatario
 
-    for img in (img_crea, img_prot):
+    for img in (img_crea, img_prot, img_pack):
         with open(img, 'rb') as f:
             data = f.read()
             msg.add_attachment(data, maintype='image', subtype='png', filename=os.path.basename(img))

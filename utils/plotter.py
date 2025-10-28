@@ -4,10 +4,17 @@ import matplotlib.dates as mdates
 import matplotlib.ticker as mtick
 import seaborn as sns
 import numpy as np
+import os
 
 
 def graficar_precios(nombre):
-    archivo_csv = f"precios_{nombre}.csv"
+    # Crear carpeta 'data' si no existe
+    os.makedirs('data', exist_ok=True)
+    
+    # Rutas dentro de la carpeta 'data'
+    archivo_csv = f"data/precios_{nombre}.csv"
+    nombre_png = f"data/{nombre}.png"
+    
     df = pd.read_csv(archivo_csv, parse_dates=['fecha'])
     df['precio_num'] = df['precio'].str.replace('€', '').str.replace(',', '.').astype(float)
 
@@ -47,7 +54,6 @@ def graficar_precios(nombre):
     plt.legend(fontsize=12)
     plt.tight_layout()
 
-    nombre_png = f"{nombre}.png"
     plt.savefig(nombre_png, dpi=150)
     plt.close()
     return nombre_png

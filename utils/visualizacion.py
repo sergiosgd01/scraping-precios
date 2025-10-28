@@ -18,5 +18,5 @@ def graficar_precios(nombre_archivo_csv):
     plt.close()
 
 if __name__ == "__main__":
-    graficar_precios('precios_evowhey.csv')
-    graficar_precios('precios_creatina.csv')
+    graficar_precios('files/precios_evowhey.csv')
+    graficar_precios('files/precios_creatina.csv')

@@ -4,8 +4,12 @@ import datetime
 import os
 
 def scrape_producto(nombre, url, selector_peso, selector_precio):
-    archivo_excel = f"precios_{nombre}.xlsx"
-    archivo_csv   = f"precios_{nombre}.csv"
+    # Crear carpeta 'data' si no existe
+    os.makedirs('data', exist_ok=True)
+    
+    # Rutas dentro de la carpeta 'data'
+    archivo_excel = f"data/precios_{nombre}.xlsx"
+    archivo_csv   = f"data/precios_{nombre}.csv"
 
     with sync_playwright() as p:
         browser = p.chromium.launch()

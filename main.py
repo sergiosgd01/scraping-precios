@@ -24,6 +24,12 @@ if __name__ == "__main__":
             "url":    "https://www.hsnstore.com/marcas/raw-series/creatina-monohidrato-en-polvo",
             "selector_peso":   "#input3485_10120",
             "selector_precio": "#product-price-10120",
+        },
+        {
+            "nombre": "proteina_pack",
+            "url":    "https://www.hsnstore.com/marcas/sport-series/evowhey-protein",
+            "selector_peso":   "#input5520_16688",
+            "selector_precio": "#product-price-16688",
         }
     ]
 
@@ -43,11 +49,15 @@ if __name__ == "__main__":
         remitente=EMAIL_USER,
         clave=EMAIL_PASS,
         destinatario=[
-            "sergiosgd2001@gmail.com",
+            "sergiosgd2001@gmail.com", 
+            "fercbrt@gmail.com",
             "fjmr.10messi@gmail.com"
+
         ],
         pre_crea = precios["creatina"],
         pre_prot = precios["evowhey"],
+        pre_pack = precios["proteina_pack"],
         img_crea = grafs["creatina"],
-        img_prot = grafs["evowhey"]
+        img_prot = grafs["evowhey"],
+        img_pack = grafs["proteina_pack"]
     )
