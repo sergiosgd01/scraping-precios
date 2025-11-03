@@ -11,6 +11,10 @@ load_dotenv()
 EMAIL_USER = os.getenv('EMAIL_USER')
 EMAIL_PASS = os.getenv('EMAIL_PASS')
 
+def cargar_emails(path="utils/emails.txt"):
+    with open(path, "r", encoding="utf-8") as f:
+        return [line.strip() for line in f if line.strip()]
+
 if __name__ == "__main__":
     productos = [
         {
@@ -33,6 +37,8 @@ if __name__ == "__main__":
         }
     ]
 
+    destinatarios = cargar_emails()
+
     precios = {}
     grafs   = {}
     for p in productos:
@@ -48,12 +54,7 @@ if __name__ == "__main__":
     enviar_email(
         remitente=EMAIL_USER,
         clave=EMAIL_PASS,
-        destinatario=[
-            "sergiosgd2001@gmail.com", 
-            "fercbrt@gmail.com",
-            "fjmr.10messi@gmail.com"
-
-        ],
+        destinatario=destinatarios,
         pre_crea = precios["creatina"],
         pre_prot = precios["evowhey"],
         pre_pack = precios["proteina_pack"],

@@ -1,1 +1,6 @@
 .env
+emails.txt  
+# Archivos de entorno y datos sensibles
+.env
+# Archivo de texto con lista de emails
+emails.txt
