@@ -1,6 +1,28 @@
+# Credenciales y datos sensibles
 .env
-emails.txt  
-# Archivos de entorno y datos sensibles
-.env
-# Archivo de texto con lista de emails
+env
+utils/emails.txt
 emails.txt
+
+# Entornos virtuales
+venv/
+.venv/
+env/
+
+# Cache y archivos compilados de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Logs generados por ejecuciones locales
+*.log
+log_envio.txt
+log_tarea.txt
+
+# Graficas generadas automaticamente
+data/*.png
+
+# Archivos del sistema/editor
+.DS_Store
+.idea/
+.vscode/

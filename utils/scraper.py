@@ -2,8 +2,63 @@ from playwright.sync_api import sync_playwright
 import pandas as pd
 import datetime
 import os
+import re
 
-def scrape_producto(nombre, url, selector_peso, selector_precio):
+def _normalizar_texto(texto):
+    return " ".join(texto.replace("\xa0", " ").split()).strip()
+
+
+def _extraer_precio_numerico(texto_precio):
+    texto_limpio = texto_precio.replace("\xa0", " ")
+    match = re.search(r"(\d+[\.,]\d+)", texto_limpio)
+    if not match:
+        raise ValueError(f"No se pudo extraer el precio de: {texto_precio}")
+    return float(match.group(1).replace(',', '.'))
+
+
+def _seleccionar_formato(page, formato_objetivo):
+    contenedor = page.locator('#sticky-add-to-cart')
+    if contenedor.count() == 0:
+        raise ValueError("No se encontró el panel principal de compra")
+
+    candidatos = [
+        contenedor.locator('label').filter(has_text=formato_objetivo),
+        page.locator('label').filter(has_text=formato_objetivo),
+    ]
+
+    for locator in candidatos:
+        if locator.count() > 0:
+            locator.first.click(timeout=5000)
+            page.wait_for_timeout(1200)
+            return
+
+    raise ValueError(f"No se encontró el formato '{formato_objetivo}'")
+
+
+def _obtener_formato_seleccionado(page, formato_objetivo):
+    seleccionado = page.locator(
+        '#sticky-add-to-cart label.border-hsn-blue, #sticky-add-to-cart label.text-hsn-blue'
+    )
+    if seleccionado.count() > 0:
+        return _normalizar_texto(seleccionado.first.inner_text())
+    return formato_objetivo
+
+
+def _obtener_precio_actual(page):
+    # En la nueva HSN el precio vigente aparece como '.primary-price' dentro del panel de compra.
+    precio_actual = page.locator('#sticky-add-to-cart .primary-price').first
+    if precio_actual.count() > 0:
+        return _normalizar_texto(precio_actual.inner_text())
+
+    # Fallback si cambia la clase del precio principal.
+    fallback = page.locator('#sticky-add-to-cart [id^="product-price-"]').nth(1)
+    if fallback.count() > 0:
+        return _normalizar_texto(fallback.inner_text())
+
+    raise ValueError("No se pudo localizar el precio actual en el panel de compra")
+
+
+def scrape_producto(nombre, url, formato_objetivo, etiqueta=None):
     # Crear carpeta 'data' si no existe
     os.makedirs('data', exist_ok=True)
     
@@ -22,15 +77,15 @@ def scrape_producto(nombre, url, selector_peso, selector_precio):
         except:
             pass
 
-        page.click(selector_peso)
-        page.wait_for_timeout(1000)
+        page.wait_for_selector('#sticky-add-to-cart', timeout=15000)
+        _seleccionar_formato(page, formato_objetivo)
 
-        name   = page.locator('h1[itemprop="name"]').inner_text()
-        peso   = page.locator(f'{selector_peso} p').inner_text()
-        precio = page.locator(selector_precio).inner_text()
+        name   = _normalizar_texto(page.locator('h1').first.inner_text())
+        peso   = _obtener_formato_seleccionado(page, formato_objetivo)
+        precio = _obtener_precio_actual(page)
 
         # Analizar el precio ANTES de añadirlo al histórico
-        precio_actual = float(precio.replace('€', '').replace(',', '.').strip())
+        precio_actual = _extraer_precio_numerico(precio)
         
         # Cargar histórico existente
         if os.path.exists(archivo_excel):
@@ -59,6 +114,8 @@ def scrape_producto(nombre, url, selector_peso, selector_precio):
         browser.close()
         
         return {
+            'nombre_mostrar': etiqueta or name,
+            'peso': peso,
             'precio': precio,
             'precio_numerico': precio_actual,
             'analisis': analisis

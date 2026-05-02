@@ -48,20 +48,26 @@ try:
         {
             "nombre": "evowhey",
             "url":    "https://www.hsnstore.com/marcas/sport-series/evowhey-protein",
-            "selector_peso":   "#input3486_16688",
-            "selector_precio": "#product-price-16688",
-        },
-        {
-            "nombre": "creatina",
-            "url":    "https://www.hsnstore.com/marcas/raw-series/creatina-monohidrato-en-polvo",
-            "selector_peso":   "#input3485_10120",
-            "selector_precio": "#product-price-10120",
+            "formato": "2Kg",
+            "etiqueta": "Evowhey Protein (2Kg)",
         },
         {
             "nombre": "proteina_pack",
             "url":    "https://www.hsnstore.com/marcas/sport-series/evowhey-protein",
-            "selector_peso":   "#input5520_16688",
-            "selector_precio": "#product-price-16688",
+            "formato": "Pack (5x500g)",
+            "etiqueta": "Evowhey Protein Pack (5x500g)",
+        },
+        {
+            "nombre": "creatina",
+            "url":    "https://www.hsnstore.com/marcas/raw-series/creatina-monohidrato-en-polvo-200-mesh",
+            "formato": "1Kg",
+            "etiqueta": "Creatina Monohidrato (200 Mesh) 1Kg",
+        },
+        {
+            "nombre": "creatina_500",
+            "url":    "https://www.hsnstore.com/marcas/raw-series/creatina-monohidrato-ultrafina-en-polvo-500-mesh",
+            "formato": "500g",
+            "etiqueta": "Creatina Monohidrato Ultrafina (500 Mesh) 500g",
         }
     ]
 
@@ -78,8 +84,8 @@ try:
             resultado = scrape_producto(
                 nombre=p["nombre"],
                 url=p["url"],
-                selector_peso=p["selector_peso"],
-                selector_precio=p["selector_precio"]
+                formato_objetivo=p["formato"],
+                etiqueta=p.get("etiqueta")
             )
             precios[p["nombre"]] = resultado
             logging.info(f"[OK] {p['nombre']}: {resultado['precio']}")
@@ -96,16 +102,8 @@ try:
         remitente=EMAIL_USER,
         clave=EMAIL_PASS,
         destinatario=destinatarios,
-        datos_productos={
-            'creatina': precios["creatina"],
-            'evowhey': precios["evowhey"],
-            'proteina_pack': precios["proteina_pack"]
-        },
-        imagenes={
-            'creatina': grafs["creatina"],
-            'evowhey': grafs["evowhey"],
-            'proteina_pack': grafs["proteina_pack"]
-        }
+        datos_productos=precios,
+        imagenes=grafs
     )
     logging.info("Correo enviado correctamente [OK]")
 
