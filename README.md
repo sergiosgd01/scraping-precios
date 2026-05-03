@@ -34,7 +34,7 @@ scraping-precios/
 
 ## 🧰 Tecnologías utilizadas
 
-- **Python 3.9+**  
+- **Python 3.10+**  
 - **Playwright** – automatización de navegador para scraping.  
 - **Pandas** – manejo de datos históricos.  
 - **Matplotlib / Seaborn** – visualización de precios.  
@@ -61,6 +61,7 @@ venv\Scripts\activate      # Windows
 ### 3. Instala las dependencias
 ```bash
 pip install -r requeriments.txt
+python -m playwright install chromium
 ```
 
 ### 4. Configura las variables de entorno

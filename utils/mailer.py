@@ -1,5 +1,6 @@
 import csv
 import datetime
+import logging
 import os
 import smtplib
 from email.mime.image import MIMEImage
@@ -305,6 +306,33 @@ def enviar_email(remitente, clave, destinatario, datos_productos, imagenes):
             img.add_header("Content-ID", f"<img_{cid}>")
             msg.attach(img)
 
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-        server.login(remitente, clave)
-        server.send_message(msg)
+    errores = []
+    transportes = [
+        ("SMTP_SSL", 465),
+        ("STARTTLS", 587),
+    ]
+
+    for modo, puerto in transportes:
+        try:
+            if modo == "SMTP_SSL":
+                with smtplib.SMTP_SSL("smtp.gmail.com", puerto, timeout=30) as server:
+                    server.login(remitente, clave)
+                    server.send_message(msg)
+            else:
+                with smtplib.SMTP("smtp.gmail.com", puerto, timeout=30) as server:
+                    server.ehlo()
+                    server.starttls()
+                    server.ehlo()
+                    server.login(remitente, clave)
+                    server.send_message(msg)
+
+            logging.info(f"Correo enviado usando {modo} en puerto {puerto}")
+            return
+        except Exception as exc:
+            errores.append(f"{modo}:{puerto} -> {exc}")
+            logging.warning(f"Fallo enviando correo por {modo} en puerto {puerto}: {exc}")
+
+    raise RuntimeError(
+        "No se pudo enviar el correo por ninguno de los transportes SMTP disponibles: "
+        + " | ".join(errores)
+    )
