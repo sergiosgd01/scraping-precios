@@ -28,8 +28,16 @@ def _seleccionar_formato(page, formato_objetivo):
 
     for locator in candidatos:
         if locator.count() > 0:
-            locator.first.click(timeout=5000)
-            page.wait_for_timeout(1200)
+            label = locator.first
+            try:
+                label.click(timeout=5000)
+            except Exception:
+                try:
+                    label.click(timeout=5000, force=True)
+                except Exception:
+                    label.evaluate("element => element.click()")
+
+            page.wait_for_timeout(1500)
             return
 
     raise ValueError(f"No se encontró el formato '{formato_objetivo}'")
@@ -77,7 +85,8 @@ def scrape_producto(nombre, url, formato_objetivo, etiqueta=None):
         except:
             pass
 
-        page.wait_for_selector('#sticky-add-to-cart', timeout=15000)
+        page.wait_for_selector('#sticky-add-to-cart', timeout=20000)
+        page.wait_for_timeout(1000)
         _seleccionar_formato(page, formato_objetivo)
 
         name   = _normalizar_texto(page.locator('h1').first.inner_text())
