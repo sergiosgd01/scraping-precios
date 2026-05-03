@@ -306,33 +306,11 @@ def enviar_email(remitente, clave, destinatario, datos_productos, imagenes):
             img.add_header("Content-ID", f"<img_{cid}>")
             msg.attach(img)
 
-    errores = []
-    transportes = [
-        ("SMTP_SSL", 465),
-        ("STARTTLS", 587),
-    ]
+    with smtplib.SMTP("smtp.gmail.com", 587, timeout=30) as server:
+        server.ehlo()
+        server.starttls()
+        server.ehlo()
+        server.login(remitente, clave)
+        server.send_message(msg)
 
-    for modo, puerto in transportes:
-        try:
-            if modo == "SMTP_SSL":
-                with smtplib.SMTP_SSL("smtp.gmail.com", puerto, timeout=30) as server:
-                    server.login(remitente, clave)
-                    server.send_message(msg)
-            else:
-                with smtplib.SMTP("smtp.gmail.com", puerto, timeout=30) as server:
-                    server.ehlo()
-                    server.starttls()
-                    server.ehlo()
-                    server.login(remitente, clave)
-                    server.send_message(msg)
-
-            logging.info(f"Correo enviado usando {modo} en puerto {puerto}")
-            return
-        except Exception as exc:
-            errores.append(f"{modo}:{puerto} -> {exc}")
-            logging.warning(f"Fallo enviando correo por {modo} en puerto {puerto}: {exc}")
-
-    raise RuntimeError(
-        "No se pudo enviar el correo por ninguno de los transportes SMTP disponibles: "
-        + " | ".join(errores)
-    )
+    logging.info("Correo enviado usando STARTTLS en puerto 587")
