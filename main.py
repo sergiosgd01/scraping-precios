@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 import os
 import logging
 import sys
-from utils.scraper import scrape_producto
+from utils.scraper import scrape_producto, sesion_hsn
 from utils.plotter import graficar_precios
 from utils.mailer import enviar_email
 
@@ -40,7 +40,11 @@ try:
         if not os.path.exists(path):
             raise FileNotFoundError(f"No se encontró el archivo {path}")
         with open(path, "r", encoding="utf-8") as f:
-            emails = [line.strip() for line in f if line.strip()]
+            emails = [
+                line.strip()
+                for line in f
+                if line.strip() and not line.lstrip().startswith("#")
+            ]
         logging.info(f"Se cargaron {len(emails)} destinatarios")
         return emails
 
@@ -78,24 +82,27 @@ try:
     grafs   = {}
 
     logging.info("Iniciando scraping de productos...")
-    for p in productos:
-        logging.info(f"Scrapeando {p['nombre']}...")
-        try:
-            resultado = scrape_producto(
-                nombre=p["nombre"],
-                url=p["url"],
-                formato_objetivo=p["formato"],
-                etiqueta=p.get("etiqueta")
-            )
-            precios[p["nombre"]] = resultado
-            logging.info(f"[OK] {p['nombre']}: {resultado['precio']}")
-            
-            logging.info(f"Generando grafica para {p['nombre']}...")
-            grafs[p["nombre"]] = graficar_precios(p["nombre"])
-            logging.info(f"[OK] Grafica generada: {grafs[p['nombre']]}")
-        except Exception as e:
-            logging.error(f"[ERROR] Error en {p['nombre']}: {str(e)}", exc_info=True)
-            raise
+    # Reutilizar el mismo Chrome para reducir bloqueos de Cloudflare.
+    with sesion_hsn() as page:
+        for p in productos:
+            logging.info(f"Scrapeando {p['nombre']}...")
+            try:
+                resultado = scrape_producto(
+                    nombre=p["nombre"],
+                    url=p["url"],
+                    formato_objetivo=p["formato"],
+                    etiqueta=p.get("etiqueta"),
+                    page=page
+                )
+                precios[p["nombre"]] = resultado
+                logging.info(f"[OK] {p['nombre']}: {resultado['precio']}")
+
+                logging.info(f"Generando grafica para {p['nombre']}...")
+                grafs[p["nombre"]] = graficar_precios(p["nombre"])
+                logging.info(f"[OK] Grafica generada: {grafs[p['nombre']]}")
+            except Exception as e:
+                logging.error(f"[ERROR] Error en {p['nombre']}: {str(e)}", exc_info=True)
+                raise
     
     logging.info("Enviando correo...")
     enviar_email(

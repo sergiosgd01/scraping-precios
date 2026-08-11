@@ -24,6 +24,16 @@ PRODUCTOS = {
         "detalle": "Pack 5x500g",
         "color": "#9333ea",
     },
+    "creatina_500": {
+        "nombre": "Creatina monohidrato ultrafina",
+        "detalle": "500g",
+        "color": "#dc2626",
+    },
+    "magnesio_bisglicinato": {
+        "nombre": "Bisglicinato de magnesio",
+        "detalle": "100mg de magnesio",
+        "color": "#7c3aed",
+    },
 }
 
 
@@ -43,6 +53,15 @@ def _porcentaje(valor):
 
 
 def _estado_precio(datos):
+    if datos.get("agotado"):
+        return {
+            "titulo": "Agotado",
+            "texto": "No se ha registrado precio hoy porque el producto está agotado.",
+            "color": "#991b1b",
+            "fondo": "#fee2e2",
+            "borde": "#fca5a5",
+        }
+
     analisis = datos["analisis"]
     precio_numerico = datos["precio_numerico"]
     promedio = analisis["precio_promedio"]
@@ -118,6 +137,17 @@ def _leer_historial_reciente(clave_producto, limite=6):
 def _generar_resumen_productos(datos_productos):
     filas = ""
     for clave, datos in datos_productos.items():
+        if datos.get("agotado"):
+            filas += f"""
+            <tr>
+                <td style="padding: 14px 12px; border-bottom: 1px solid #e5e7eb;">
+                    <div style="font-size: 14px; font-weight: 700; color: #111827;">{_nombre_producto(clave)}</div>
+                    <div style="font-size: 12px; color: #991b1b; margin-top: 3px;">Agotado hoy</div>
+                </td>
+                <td colspan="4" style="padding: 14px 12px; border-bottom: 1px solid #e5e7eb; text-align: right; font-size: 16px; font-weight: 800; color: #991b1b;">Agotado</td>
+            </tr>
+            """
+            continue
         analisis = datos["analisis"]
         estado = _estado_precio(datos)
         filas += f"""
@@ -149,6 +179,15 @@ def _generar_resumen_productos(datos_productos):
 
 def generar_alerta_precio(nombre, datos):
     """Genera una tarjeta de producto con precio actual, estado e histórico."""
+    if datos.get("agotado"):
+        return f"""
+        <div style="background: #fff1f2; border: 1px solid #fecdd3; border-radius: 14px; margin: 18px 0; padding: 22px;">
+            <div style="font-size: 13px; color: #9f1239; font-weight: 700; text-transform: uppercase; letter-spacing: .04em;">{_nombre_producto(nombre)}</div>
+            <div style="font-size: 26px; color: #991b1b; font-weight: 900; margin-top: 8px;">Agotado</div>
+            <p style="margin: 10px 0 0; color: #9f1239; font-size: 14px;">No se ha guardado precio para este producto hoy.</p>
+        </div>
+        """
+
     analisis = datos["analisis"]
     estado = _estado_precio(datos)
     color_producto = PRODUCTOS.get(nombre, {}).get("color", "#2563eb")

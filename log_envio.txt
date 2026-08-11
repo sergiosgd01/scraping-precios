@@ -25,3 +25,363 @@
 2026-05-02 17:06:27,080 - INFO - Correo enviado correctamente [OK]
 2026-05-02 17:06:27,080 - INFO - === Fin de ejecucion ===
 
+2026-08-11 14:40:37,438 - INFO - === Inicio de ejecución del script ===
+2026-08-11 14:40:37,439 - INFO - Cargando variables de entorno...
+2026-08-11 14:40:37,439 - INFO - Email configurado: pruebascrapingsgd@gmail.com
+2026-08-11 14:40:37,439 - INFO - Cargando lista de emails...
+2026-08-11 14:40:37,439 - INFO - Cargando emails desde utils/emails.txt...
+2026-08-11 14:40:37,439 - INFO - Se cargaron 3 destinatarios
+2026-08-11 14:40:37,439 - INFO - Iniciando scraping de productos...
+2026-08-11 14:40:38,148 - INFO - Scrapeando evowhey...
+2026-08-11 14:40:39,261 - ERROR - [ERROR] Error en evowhey: HSN bloqueó el acceso con Cloudflare. Abre el perfil de Chrome del proyecto y completa cualquier verificación si aparece.
+Traceback (most recent call last):
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/main.py", line 86, in <module>
+    resultado = scrape_producto(
+        nombre=p["nombre"],
+    ...<3 lines>...
+        page=page
+    )
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/utils/scraper.py", line 127, in scrape_producto
+    raise RuntimeError(
+    ...<2 lines>...
+    )
+RuntimeError: HSN bloqueó el acceso con Cloudflare. Abre el perfil de Chrome del proyecto y completa cualquier verificación si aparece.
+2026-08-11 14:40:39,324 - ERROR - Error general: HSN bloqueó el acceso con Cloudflare. Abre el perfil de Chrome del proyecto y completa cualquier verificación si aparece.
+Traceback (most recent call last):
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/main.py", line 86, in <module>
+    resultado = scrape_producto(
+        nombre=p["nombre"],
+    ...<3 lines>...
+        page=page
+    )
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/utils/scraper.py", line 127, in scrape_producto
+    raise RuntimeError(
+    ...<2 lines>...
+    )
+RuntimeError: HSN bloqueó el acceso con Cloudflare. Abre el perfil de Chrome del proyecto y completa cualquier verificación si aparece.
+2026-08-11 14:40:39,325 - INFO - === Fin de ejecucion ===
+
+2026-08-11 14:42:58,539 - INFO - === Inicio de ejecución del script ===
+2026-08-11 14:42:58,539 - INFO - Cargando variables de entorno...
+2026-08-11 14:42:58,540 - INFO - Email configurado: pruebascrapingsgd@gmail.com
+2026-08-11 14:42:58,540 - INFO - Cargando lista de emails...
+2026-08-11 14:42:58,540 - INFO - Cargando emails desde utils/emails.txt...
+2026-08-11 14:42:58,540 - INFO - Se cargaron 3 destinatarios
+2026-08-11 14:42:58,540 - INFO - Iniciando scraping de productos...
+2026-08-11 14:42:58,991 - ERROR - Error general: BrowserType.launch_persistent_context: Failed to create a ProcessSingleton for your profile directory. This usually means that the profile is already in use by another instance of Chromium.
+Call log:
+  - <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AcceptCHFrame,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --enable-unsafe-swiftshader --no-sandbox --user-data-dir=/Users/sergiosgd/.hsn-price-scraper-chrome --remote-debugging-pipe about:blank
+  - <launched> pid=9380
+  - [pid=9380][err] [9380:69285:0811/144258.984033:ERROR:chrome/browser/process_singleton_posix.cc:347] Failed to create /Users/sergiosgd/.hsn-price-scraper-chrome/SingletonLock: File exists (17)
+  - [pid=9380][err] [9380:69285:0811/144258.984486:ERROR:chrome/app/chrome_main_delegate.cc:520] Failed to create a ProcessSingleton for your profile directory. This means that running multiple instances would start multiple browser processes rather than opening a new window in the existing process. Aborting now to avoid profile corruption.
+  - [pid=9380] <gracefully close start>
+  - [pid=9380] <kill>
+  - [pid=9380] <will force kill>
+  - [pid=9380] exception while trying to kill process: Error: kill EPERM
+  - [pid=9380] <process did exit: exitCode=21, signal=null>
+  - [pid=9380] starting temporary directories cleanup
+  - [pid=9380] finished temporary directories cleanup
+  - [pid=9380] <gracefully close end>
+Traceback (most recent call last):
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/main.py", line 82, in <module>
+    with sesion_hsn() as page:
+         ~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/utils/scraper.py", line 87, in sesion_hsn
+    contexto = p.chromium.launch_persistent_context(
+        str(perfil_chrome),
+    ...<2 lines>...
+        viewport={'width': 1440, 'height': 1000}
+    )
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/venv/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 14804, in launch_persistent_context
+    self._sync(
+    ~~~~~~~~~~^
+        self._impl_obj.launch_persistent_context(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<51 lines>...
+        )
+        ^
+    )
+    ^
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/venv/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+           ~~~~~~~~~~~^^
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/venv/lib/python3.14/site-packages/playwright/_impl/_browser_type.py", line 166, in launch_persistent_context
+    result = await self._channel.send_return_as_dict(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "launchPersistentContext", TimeoutSettings.launch_timeout, params
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/venv/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 83, in send_return_as_dict
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/venv/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.Error: BrowserType.launch_persistent_context: Failed to create a ProcessSingleton for your profile directory. This usually means that the profile is already in use by another instance of Chromium.
+Call log:
+  - <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AcceptCHFrame,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --enable-unsafe-swiftshader --no-sandbox --user-data-dir=/Users/sergiosgd/.hsn-price-scraper-chrome --remote-debugging-pipe about:blank
+  - <launched> pid=9380
+  - [pid=9380][err] [9380:69285:0811/144258.984033:ERROR:chrome/browser/process_singleton_posix.cc:347] Failed to create /Users/sergiosgd/.hsn-price-scraper-chrome/SingletonLock: File exists (17)
+  - [pid=9380][err] [9380:69285:0811/144258.984486:ERROR:chrome/app/chrome_main_delegate.cc:520] Failed to create a ProcessSingleton for your profile directory. This means that running multiple instances would start multiple browser processes rather than opening a new window in the existing process. Aborting now to avoid profile corruption.
+  - [pid=9380] <gracefully close start>
+  - [pid=9380] <kill>
+  - [pid=9380] <will force kill>
+  - [pid=9380] exception while trying to kill process: Error: kill EPERM
+  - [pid=9380] <process did exit: exitCode=21, signal=null>
+  - [pid=9380] starting temporary directories cleanup
+  - [pid=9380] finished temporary directories cleanup
+  - [pid=9380] <gracefully close end>
+
+2026-08-11 14:42:58,992 - INFO - === Fin de ejecucion ===
+
+2026-08-11 14:44:06,097 - INFO - === Inicio de ejecución del script ===
+2026-08-11 14:44:06,098 - INFO - Cargando variables de entorno...
+2026-08-11 14:44:06,098 - INFO - Email configurado: pruebascrapingsgd@gmail.com
+2026-08-11 14:44:06,098 - INFO - Cargando lista de emails...
+2026-08-11 14:44:06,098 - INFO - Cargando emails desde utils/emails.txt...
+2026-08-11 14:44:06,098 - INFO - Se cargaron 1 destinatarios
+2026-08-11 14:44:06,098 - INFO - Iniciando scraping de productos...
+2026-08-11 14:44:06,780 - INFO - Scrapeando evowhey...
+2026-08-11 14:44:11,142 - INFO - [OK] evowhey: 54,99 €
+2026-08-11 14:44:11,142 - INFO - Generando grafica para evowhey...
+2026-08-11 14:44:11,465 - INFO - [OK] Grafica generada: data/evowhey.png
+2026-08-11 14:44:11,465 - INFO - Scrapeando proteina_pack...
+2026-08-11 14:44:16,424 - ERROR - [ERROR] Error en proteina_pack: HSN bloqueó el acceso con Cloudflare. Abre el perfil de Chrome del proyecto y completa cualquier verificación si aparece.
+Traceback (most recent call last):
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/main.py", line 90, in <module>
+    resultado = scrape_producto(
+        nombre=p["nombre"],
+    ...<3 lines>...
+        page=page
+    )
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/utils/scraper.py", line 127, in scrape_producto
+    raise RuntimeError(
+    ...<2 lines>...
+    )
+RuntimeError: HSN bloqueó el acceso con Cloudflare. Abre el perfil de Chrome del proyecto y completa cualquier verificación si aparece.
+2026-08-11 14:44:16,541 - ERROR - Error general: HSN bloqueó el acceso con Cloudflare. Abre el perfil de Chrome del proyecto y completa cualquier verificación si aparece.
+Traceback (most recent call last):
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/main.py", line 90, in <module>
+    resultado = scrape_producto(
+        nombre=p["nombre"],
+    ...<3 lines>...
+        page=page
+    )
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/utils/scraper.py", line 127, in scrape_producto
+    raise RuntimeError(
+    ...<2 lines>...
+    )
+RuntimeError: HSN bloqueó el acceso con Cloudflare. Abre el perfil de Chrome del proyecto y completa cualquier verificación si aparece.
+2026-08-11 14:44:16,542 - INFO - === Fin de ejecucion ===
+
+2026-08-11 14:46:37,964 - INFO - === Inicio de ejecución del script ===
+2026-08-11 14:46:37,964 - INFO - Cargando variables de entorno...
+2026-08-11 14:46:37,965 - INFO - Email configurado: pruebascrapingsgd@gmail.com
+2026-08-11 14:46:37,965 - INFO - Cargando lista de emails...
+2026-08-11 14:46:37,965 - INFO - Cargando emails desde utils/emails.txt...
+2026-08-11 14:46:37,965 - INFO - Se cargaron 1 destinatarios
+2026-08-11 14:46:37,965 - INFO - Iniciando scraping de productos...
+2026-08-11 14:46:38,405 - ERROR - Error general: BrowserType.launch_persistent_context: Failed to create a ProcessSingleton for your profile directory. This usually means that the profile is already in use by another instance of Chromium.
+Call log:
+  - <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AcceptCHFrame,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --enable-unsafe-swiftshader --no-sandbox --user-data-dir=/Users/sergiosgd/.hsn-price-scraper-chrome --remote-debugging-pipe about:blank
+  - <launched> pid=10795
+  - [pid=10795][err] [10795:76636:0811/144638.397150:ERROR:chrome/browser/process_singleton_posix.cc:347] Failed to create /Users/sergiosgd/.hsn-price-scraper-chrome/SingletonLock: File exists (17)
+  - [pid=10795][err] [10795:76636:0811/144638.397939:ERROR:chrome/app/chrome_main_delegate.cc:520] Failed to create a ProcessSingleton for your profile directory. This means that running multiple instances would start multiple browser processes rather than opening a new window in the existing process. Aborting now to avoid profile corruption.
+  - [pid=10795] <gracefully close start>
+  - [pid=10795] <kill>
+  - [pid=10795] <will force kill>
+  - [pid=10795] exception while trying to kill process: Error: kill EPERM
+  - [pid=10795] <process did exit: exitCode=21, signal=null>
+  - [pid=10795] starting temporary directories cleanup
+  - [pid=10795] finished temporary directories cleanup
+  - [pid=10795] <gracefully close end>
+Traceback (most recent call last):
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/main.py", line 86, in <module>
+    with sesion_hsn() as page:
+         ~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/utils/scraper.py", line 88, in sesion_hsn
+    contexto = p.chromium.launch_persistent_context(
+        str(perfil_chrome),
+    ...<2 lines>...
+        viewport={'width': 1440, 'height': 1000}
+    )
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/venv/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 14804, in launch_persistent_context
+    self._sync(
+    ~~~~~~~~~~^
+        self._impl_obj.launch_persistent_context(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<51 lines>...
+        )
+        ^
+    )
+    ^
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/venv/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+           ~~~~~~~~~~~^^
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/venv/lib/python3.14/site-packages/playwright/_impl/_browser_type.py", line 166, in launch_persistent_context
+    result = await self._channel.send_return_as_dict(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "launchPersistentContext", TimeoutSettings.launch_timeout, params
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/venv/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 83, in send_return_as_dict
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/venv/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.Error: BrowserType.launch_persistent_context: Failed to create a ProcessSingleton for your profile directory. This usually means that the profile is already in use by another instance of Chromium.
+Call log:
+  - <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AcceptCHFrame,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --enable-unsafe-swiftshader --no-sandbox --user-data-dir=/Users/sergiosgd/.hsn-price-scraper-chrome --remote-debugging-pipe about:blank
+  - <launched> pid=10795
+  - [pid=10795][err] [10795:76636:0811/144638.397150:ERROR:chrome/browser/process_singleton_posix.cc:347] Failed to create /Users/sergiosgd/.hsn-price-scraper-chrome/SingletonLock: File exists (17)
+  - [pid=10795][err] [10795:76636:0811/144638.397939:ERROR:chrome/app/chrome_main_delegate.cc:520] Failed to create a ProcessSingleton for your profile directory. This means that running multiple instances would start multiple browser processes rather than opening a new window in the existing process. Aborting now to avoid profile corruption.
+  - [pid=10795] <gracefully close start>
+  - [pid=10795] <kill>
+  - [pid=10795] <will force kill>
+  - [pid=10795] exception while trying to kill process: Error: kill EPERM
+  - [pid=10795] <process did exit: exitCode=21, signal=null>
+  - [pid=10795] starting temporary directories cleanup
+  - [pid=10795] finished temporary directories cleanup
+  - [pid=10795] <gracefully close end>
+
+2026-08-11 14:46:38,406 - INFO - === Fin de ejecucion ===
+
+2026-08-11 14:47:06,974 - INFO - === Inicio de ejecución del script ===
+2026-08-11 14:47:06,974 - INFO - Cargando variables de entorno...
+2026-08-11 14:47:06,974 - INFO - Email configurado: pruebascrapingsgd@gmail.com
+2026-08-11 14:47:06,974 - INFO - Cargando lista de emails...
+2026-08-11 14:47:06,974 - INFO - Cargando emails desde utils/emails.txt...
+2026-08-11 14:47:06,974 - INFO - Se cargaron 1 destinatarios
+2026-08-11 14:47:06,974 - INFO - Iniciando scraping de productos...
+2026-08-11 14:47:07,642 - INFO - Scrapeando evowhey...
+2026-08-11 14:47:12,054 - INFO - [OK] evowhey: 54,99 €
+2026-08-11 14:47:12,055 - INFO - Generando grafica para evowhey...
+2026-08-11 14:47:12,355 - INFO - [OK] Grafica generada: data/evowhey.png
+2026-08-11 14:47:12,355 - INFO - Scrapeando proteina_pack...
+2026-08-11 14:47:19,005 - INFO - [OK] proteina_pack: 73,48 €
+2026-08-11 14:47:19,005 - INFO - Generando grafica para proteina_pack...
+2026-08-11 14:47:19,192 - INFO - [OK] Grafica generada: data/proteina_pack.png
+2026-08-11 14:47:19,192 - INFO - Scrapeando creatina...
+2026-08-11 14:47:19,246 - ERROR - [ERROR] Error en creatina: HSN bloqueó el acceso con Cloudflare. Abre el perfil de Chrome del proyecto y completa cualquier verificación si aparece.
+Traceback (most recent call last):
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/main.py", line 90, in <module>
+    resultado = scrape_producto(
+        nombre=p["nombre"],
+    ...<3 lines>...
+        page=page
+    )
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/utils/scraper.py", line 132, in scrape_producto
+    raise RuntimeError(
+    ...<2 lines>...
+    )
+RuntimeError: HSN bloqueó el acceso con Cloudflare. Abre el perfil de Chrome del proyecto y completa cualquier verificación si aparece.
+2026-08-11 14:47:19,340 - ERROR - Error general: HSN bloqueó el acceso con Cloudflare. Abre el perfil de Chrome del proyecto y completa cualquier verificación si aparece.
+Traceback (most recent call last):
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/main.py", line 90, in <module>
+    resultado = scrape_producto(
+        nombre=p["nombre"],
+    ...<3 lines>...
+        page=page
+    )
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/utils/scraper.py", line 132, in scrape_producto
+    raise RuntimeError(
+    ...<2 lines>...
+    )
+RuntimeError: HSN bloqueó el acceso con Cloudflare. Abre el perfil de Chrome del proyecto y completa cualquier verificación si aparece.
+2026-08-11 14:47:19,341 - INFO - === Fin de ejecucion ===
+
+2026-08-11 14:48:38,094 - INFO - === Inicio de ejecución del script ===
+2026-08-11 14:48:38,095 - INFO - Cargando variables de entorno...
+2026-08-11 14:48:38,095 - INFO - Email configurado: pruebascrapingsgd@gmail.com
+2026-08-11 14:48:38,095 - INFO - Cargando lista de emails...
+2026-08-11 14:48:38,095 - INFO - Cargando emails desde utils/emails.txt...
+2026-08-11 14:48:38,095 - INFO - Se cargaron 1 destinatarios
+2026-08-11 14:48:38,095 - INFO - Iniciando scraping de productos...
+2026-08-11 14:48:38,682 - INFO - Scrapeando evowhey...
+2026-08-11 14:50:40,168 - ERROR - [ERROR] Error en evowhey: La verificación de Cloudflare no se completó en dos minutos. Vuelve a ejecutar el proceso cuando HSN esté accesible.
+Traceback (most recent call last):
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/main.py", line 90, in <module>
+    resultado = scrape_producto(
+        nombre=p["nombre"],
+    ...<3 lines>...
+        page=page
+    )
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/utils/scraper.py", line 167, in scrape_producto
+    _esperar_validacion_cloudflare(page)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/utils/scraper.py", line 109, in _esperar_validacion_cloudflare
+    raise RuntimeError(
+    ...<2 lines>...
+    )
+RuntimeError: La verificación de Cloudflare no se completó en dos minutos. Vuelve a ejecutar el proceso cuando HSN esté accesible.
+2026-08-11 14:50:40,242 - ERROR - Error general: La verificación de Cloudflare no se completó en dos minutos. Vuelve a ejecutar el proceso cuando HSN esté accesible.
+Traceback (most recent call last):
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/main.py", line 90, in <module>
+    resultado = scrape_producto(
+        nombre=p["nombre"],
+    ...<3 lines>...
+        page=page
+    )
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/utils/scraper.py", line 167, in scrape_producto
+    _esperar_validacion_cloudflare(page)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/utils/scraper.py", line 109, in _esperar_validacion_cloudflare
+    raise RuntimeError(
+    ...<2 lines>...
+    )
+RuntimeError: La verificación de Cloudflare no se completó en dos minutos. Vuelve a ejecutar el proceso cuando HSN esté accesible.
+2026-08-11 14:50:40,243 - INFO - === Fin de ejecucion ===
+
+2026-08-11 14:50:47,457 - INFO - === Inicio de ejecución del script ===
+2026-08-11 14:50:47,457 - INFO - Cargando variables de entorno...
+2026-08-11 14:50:47,457 - INFO - Email configurado: pruebascrapingsgd@gmail.com
+2026-08-11 14:50:47,457 - INFO - Cargando lista de emails...
+2026-08-11 14:50:47,457 - INFO - Cargando emails desde utils/emails.txt...
+2026-08-11 14:50:47,457 - INFO - Se cargaron 1 destinatarios
+2026-08-11 14:50:47,457 - INFO - Iniciando scraping de productos...
+2026-08-11 14:50:48,049 - INFO - Scrapeando evowhey...
+2026-08-11 14:52:49,537 - ERROR - [ERROR] Error en evowhey: La verificación de Cloudflare no se completó en dos minutos. Vuelve a ejecutar el proceso cuando HSN esté accesible.
+Traceback (most recent call last):
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/main.py", line 90, in <module>
+    resultado = scrape_producto(
+        nombre=p["nombre"],
+    ...<3 lines>...
+        page=page
+    )
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/utils/scraper.py", line 167, in scrape_producto
+    _esperar_validacion_cloudflare(page)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/utils/scraper.py", line 109, in _esperar_validacion_cloudflare
+    raise RuntimeError(
+    ...<2 lines>...
+    )
+RuntimeError: La verificación de Cloudflare no se completó en dos minutos. Vuelve a ejecutar el proceso cuando HSN esté accesible.
+2026-08-11 14:52:49,600 - ERROR - Error general: La verificación de Cloudflare no se completó en dos minutos. Vuelve a ejecutar el proceso cuando HSN esté accesible.
+Traceback (most recent call last):
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/main.py", line 90, in <module>
+    resultado = scrape_producto(
+        nombre=p["nombre"],
+    ...<3 lines>...
+        page=page
+    )
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/utils/scraper.py", line 167, in scrape_producto
+    _esperar_validacion_cloudflare(page)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/sergiosgd/Dev/ProyectosPersonal/scraping-precios/utils/scraper.py", line 109, in _esperar_validacion_cloudflare
+    raise RuntimeError(
+    ...<2 lines>...
+    )
+RuntimeError: La verificación de Cloudflare no se completó en dos minutos. Vuelve a ejecutar el proceso cuando HSN esté accesible.
+2026-08-11 14:52:49,600 - INFO - === Fin de ejecucion ===
+

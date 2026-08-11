@@ -76,6 +76,18 @@ EMAIL_PASS=tu_contraseña_o_app_password
 python main.py
 ```
 
+### Actualización manual (recomendada para HSN)
+
+Para consultar HSN desde Chrome normal y evitar el navegador automatizado:
+
+```bash
+venv/bin/python manual_update.py
+```
+
+Se abrirá una página local con los cuatro precios. Pulsa **Abrir páginas HSN**,
+copia los precios y después **Guardar y enviar correo**. La terminal debe
+permanecer abierta mientras usas la página.
+
 ---
 
 ## 🧩 Flujo de funcionamiento
