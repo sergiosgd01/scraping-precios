@@ -84,7 +84,7 @@ Para consultar HSN desde Chrome normal y evitar el navegador automatizado:
 venv/bin/python manual_update.py
 ```
 
-Se abrirá una página local con los cuatro precios. Pulsa **Abrir páginas HSN**,
+Se abrirá una página local con los cinco precios. Pulsa **Abrir páginas HSN**,
 copia los precios y después **Guardar y enviar correo**. La terminal debe
 permanecer abierta mientras usas la página.
 

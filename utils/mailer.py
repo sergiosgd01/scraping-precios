@@ -29,9 +29,9 @@ PRODUCTOS = {
         "detalle": "500g",
         "color": "#dc2626",
     },
-    "magnesio_bisglicinato": {
-        "nombre": "Bisglicinato de magnesio",
-        "detalle": "100mg de magnesio",
+    "magnesio_bisglicinato_polvo": {
+        "nombre": "Bisglicinato de magnesio en polvo",
+        "detalle": "150g",
         "color": "#7c3aed",
     },
 }
@@ -258,22 +258,15 @@ def generar_alerta_precio(nombre, datos):
     """
 
 
-def enviar_email(remitente, clave, destinatario, datos_productos, imagenes):
-    """
-    Envía el correo con análisis de precios y gráficas embebidas.
-
-    Args:
-        remitente: Email del remitente
-        clave: Contraseña o app password
-        destinatario: Lista de destinatarios o string
-        datos_productos: Dict con datos de cada producto (precio, analisis)
-        imagenes: Dict con rutas de las imágenes
-    """
+def generar_reporte_html(datos_productos, fuentes_imagenes=None, mensaje=None):
+    """Genera el informe HTML común para el correo y la pantalla final."""
     fecha = datetime.date.today()
-    msg = MIMEMultipart("related")
-    msg["Subject"] = f"Reporte HSN - {fecha.strftime('%d/%m/%Y')}"
-    msg["From"] = remitente
-    msg["To"] = ", ".join(destinatario) if isinstance(destinatario, list) else destinatario
+    fuentes_imagenes = fuentes_imagenes or {}
+    mensaje_html = (
+        f'<p style="margin: 14px 0 0; color: #bbf7d0; font-size: 14px; font-weight: 700;">{mensaje}</p>'
+        if mensaje
+        else ""
+    )
 
     alertas_html = ""
     for nombre, datos in datos_productos.items():
@@ -281,14 +274,15 @@ def enviar_email(remitente, clave, destinatario, datos_productos, imagenes):
 
     secciones_graficas = ""
     for clave_producto in datos_productos:
-        if clave_producto not in imagenes:
+        fuente = fuentes_imagenes.get(clave_producto)
+        if not fuente:
             continue
         secciones_graficas += f"""
         <div style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; margin: 18px 0; overflow: hidden;">
             <div style="padding: 18px 20px 8px 20px;">
                 <div style="font-size: 16px; color: #111827; font-weight: 800;">{_nombre_producto(clave_producto)}</div>
             </div>
-            <img src="cid:img_{clave_producto}" alt="Gráfica {_nombre_producto(clave_producto)}" style="display: block; width: 100%; max-width: 760px; height: auto; border: 0;">
+            <img src="{fuente}" alt="Gráfica {_nombre_producto(clave_producto)}" style="display: block; width: 100%; max-width: 760px; height: auto; border: 0;">
         </div>
         """
 
@@ -308,6 +302,7 @@ def enviar_email(remitente, clave, destinatario, datos_productos, imagenes):
                                 <div style="font-size: 13px; color: #93c5fd; text-transform: uppercase; letter-spacing: .08em; font-weight: 800;">Monitor de precios HSN</div>
                                 <h1 style="margin: 8px 0 0 0; color: #ffffff; font-size: 30px; line-height: 1.2;">Reporte diario</h1>
                                 <p style="margin: 10px 0 0 0; color: #cbd5e1; font-size: 15px;">{fecha.strftime('%d/%m/%Y')} · Seguimiento de precio actual, mínimos, medias y evolución.</p>
+                                {mensaje_html}
                             </td>
                         </tr>
                         <tr>
@@ -337,7 +332,21 @@ def enviar_email(remitente, clave, destinatario, datos_productos, imagenes):
     </html>
     """
 
-    msg.attach(MIMEText(html, "html"))
+    return html
+
+
+def enviar_email(remitente, clave, destinatario, datos_productos, imagenes):
+    """Envía el correo con análisis de precios y gráficas embebidas."""
+    fecha = datetime.date.today()
+    msg = MIMEMultipart("related")
+    msg["Subject"] = f"Reporte HSN - {fecha.strftime('%d/%m/%Y')}"
+    msg["From"] = remitente
+    msg["To"] = ", ".join(destinatario) if isinstance(destinatario, list) else destinatario
+    fuentes_imagenes = {
+        clave_producto: f"cid:img_{clave_producto}"
+        for clave_producto in imagenes
+    }
+    msg.attach(MIMEText(generar_reporte_html(datos_productos, fuentes_imagenes), "html"))
 
     for cid, ruta in imagenes.items():
         with open(ruta, "rb") as f:
